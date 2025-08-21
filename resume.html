@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kathireshwaran C | Resume</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00f7ff;
+            --secondary: #ff00e4;
+            --dark: #0a0a14;
+            --light: #f0f0f0;
+            --terminal-text: #00ff41;
+            --neon-blue: #00f7ff;
+            --neon-pink: #ff00e4;
+            --neon-green: #00ff41;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Terminal-like scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            position: fixed;
+            width: 100%;
+            background-color: rgba(10, 10, 20, 0.9);
+            z-index: 100;
+            border-bottom: 1px solid var(--primary);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .resume-container {
+            padding: 8rem 5% 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            animation: expand 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes expand {
+            from { width: 50%; }
+            to { width: 100%; }
+        }
+
+        /* Resume Options */
+        .resume-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .resume-card {
+            background: rgba(20, 20, 30, 0.7);
+            border: 1px solid rgba(0, 247, 255, 0.2);
+            border-radius: 8px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+        }
+
+        .resume-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 5px 20px rgba(0, 247, 255, 0.3);
+        }
+
+        .resume-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(0, 247, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .resume-icon i {
+            font-size: 3rem;
+            color: var(--primary);
+        }
+
+        .resume-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .resume-card p {
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--dark);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: var(--primary);
+            color: var(--dark);
+            box-shadow: 0 0 15px var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Resume Details */
+        .resume-details {
+            margin-top: 4rem;
+            padding: 2rem;
+            background: rgba(20, 20, 30, 0.7);
+            border: 1px solid rgba(0, 247, 255, 0.2);
+            border-radius: 8px;
+        }
+
+        .resume-details h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 1px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+
+        .detail-item {
+            margin-bottom: 2rem;
+        }
+
+        .detail-item h4 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .detail-item p {
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-item ul {
+            list-style-type: none;
+            padding-left: 1rem;
+        }
+
+        .detail-item li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .detail-item li::before {
+            content: ">";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(10, 10, 20, 0.9);
+            border-top: 1px solid var(--primary);
+            margin-top: 3rem;
+        }
+
+        .footer-links {
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .resume-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 5%;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 20, 0.95);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                gap: 1.5rem;
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                border-bottom: 1px solid var(--primary);
+            }
+            
+            nav ul.active {
+                transform: translateY(0);
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .resume-container {
+                padding: 6rem 5% 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .resume-card {
+                padding: 1.5rem;
+            }
+            
+            .resume-icon {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .resume-icon i {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">Kathireshwaran C</div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav>
+            <ul id="navMenu">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="resume.html">Resume</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Resume Section -->
+    <div class="resume-container">
+        <h2 class="section-title">My Resumes</h2>
+        
+        <div class="resume-options">
+            <div class="resume-card">
+                <div class="resume-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3>Frontend Developer Resume</h3>
+                <p>Focus on web development skills, projects, and frontend technologies. Highlights my experience with HTML, CSS, JavaScript, and modern frameworks.</p>
+                <a href="https://drive.google.com/file/d/1jN73UVipZDwLl52u0xh6i8YrQGagmwB9/view?usp=sharing" class="btn btn-primary" target="_blank">
+                    <i class="fas fa-download"></i> Download PDF
+                </a>
+            </div>
+            
+            <div class="resume-card">
+                <div class="resume-icon">
+                    <i class="fab fa-java"></i>
+                </div>
+                <h3>Java Developer Resume</h3>
+                <p>Focus on Java programming, software development, and backend technologies. Showcases my expertise in Java, Spring Boot, and database management.</p>
+                <a href="https://drive.google.com/file/d/16FM6ptpKYH2nqUBBYersD7HG-bPQ4LzO/view?usp=sharing" class="btn btn-primary" target="_blank">
+                    <i class="fas fa-download"></i> Download PDF
+                </a>
+            </div>
+        </div>
+
+        <div class="resume-details">
+            <h3>What's Included</h3>
+            
+            <div class="detail-item">
+                <h4>Frontend Developer Resume</h4>
+                <ul>
+                    <li>Expertise in HTML5, CSS3, JavaScript (ES6+)</li>
+                    <li>Experience with React.js and modern frontend frameworks</li>
+                    <li>UI/UX design skills and responsive web design</li>
+                    <li>Projects showcasing frontend development capabilities</li>
+                    <li>Technical skills relevant to frontend positions</li>
+                </ul>
+            </div>
+            
+            <div class="detail-item">
+                <h4>Java Developer Resume</h4>
+                <ul>
+                    <li>Strong Java programming skills (Java 8+)</li>
+                    <li>Experience with Spring Boot and Hibernate</li>
+                    <li>Database management with SQL and MongoDB</li>
+                    <li>RESTful API development and microservices architecture</li>
+                    <li>Projects demonstrating backend development expertise</li>
+                </ul>
+            </div>
+            
+            <div class="detail-item">
+                <h4>Both Resumes Include</h4>
+                <ul>
+                    <li>Education background and relevant coursework</li>
+                    <li>Technical skills matrix with proficiency levels</li>
+                    <li>Project portfolio with descriptions and technologies used</li>
+                    <li>Certifications and training programs completed</li>
+                    <li>Contact information and links to coding profiles</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back to Portfolio
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Kathireshwaran. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="index.html#about">About</a> | 
+            <a href="index.html#skills">Skills</a> | 
+            <a href="index.html#projects">Projects</a> | 
+            <a href="index.html#contact">Contact</a> |
+            <a href="resume.html">Resume</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navMenu.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Close menu when clicking on a link
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supermarket Analysis | Kathireshwaran</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #00ff41;
+            --neon-blue: #00f7ff;
+            --neon-pink: #ff00e4;
+            --dark-bg: #0a0a14;
+            --terminal-bg: rgba(0, 10, 0, 0.8);
+            --card-bg: rgba(20, 20, 30, 0.7);
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: white;
+            font-family: 'Share Tech Mono', monospace;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Terminal Header */
+        .terminal-header {
+            background: var(--terminal-bg);
+            border: 1px solid var(--neon-green);
+            border-radius: 8px 8px 0 0;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .terminal-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-right: 1rem;
+        }
+        .new img{
+            height: 300px;
+            width: 500px;
+        }
+        
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .btn-red { background: #ff5f56; }
+        .btn-yellow { background: #ffbd2e; }
+        .btn-green { background: #27c93f; }
+        
+        .terminal-title {
+            color: var(--neon-green);
+            text-shadow: 0 0 5px var(--neon-green);
+            flex-grow: 1;
+            text-align: center;
+        }
+        
+        /* Terminal Content */
+        .terminal-content {
+            background: var(--terminal-bg);
+            border: 1px solid var(--neon-green);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            padding: 2rem;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+        }
+        
+        .command-line {
+            display: flex;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+        
+        .prompt {
+            color: var(--neon-green);
+            margin-right: 0.5rem;
+        }
+        
+        .command {
+            color: white;
+            font-family: 'Share Tech Mono', monospace;
+        }
+        
+        .blinking-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: var(--neon-green);
+            animation: blink 1s step-end infinite;
+            margin-left: 0.25rem;
+        }
+        
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* Analysis Cards */
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .analysis-card {
+            background: var(--card-bg);
+            border: 1px solid var(--neon-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .analysis-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 247, 255, 0.3);
+            border-color: var(--neon-pink);
+        }
+        
+        .analysis-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+        }
+        
+        .card-title {
+            color: var(--neon-blue);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-title i {
+            margin-right: 0.5rem;
+        }
+        
+        .tech-tag {
+            display: inline-block;
+            background: rgba(0, 247, 255, 0.1);
+            color: var(--neon-blue);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--neon-blue);
+        }
+        
+        /* Insights Section */
+        .insights-section {
+            margin-top: 3rem;
+            border-top: 1px dashed var(--neon-green);
+            padding-top: 2rem;
+        }
+        
+        .insight-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--neon-pink);
+        }
+        
+        .insight-icon {
+            color: var(--neon-pink);
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .terminal-content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Terminal Window -->
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <div class="terminal-btn btn-red"></div>
+                <div class="terminal-btn btn-yellow"></div>
+                <div class="terminal-btn btn-green"></div>
+            </div>
+            <div class="terminal-title">supermarket_analysis.exe</div>
+        </div>
+        
+        <div class="terminal-content">
+            <div class="command-line">
+                <span class="prompt">></span>
+                <span class="command">run analysis --type=supermarket --depth=full</span>
+                <span class="blinking-cursor"></span>
+            </div>
+            
+            <div class="command-line">
+                <span class="prompt">></span>
+                <span class="command">loading datasets...</span>
+            </div>
+            
+            <div class="command-line">
+                <span class="prompt">></span>
+                <span class="command">analysis complete. displaying results:</span>
+            </div>
+            
+            <h2 class= "new"style="color: var(--neon-green); margin-top: 2rem; border-bottom: 1px solid var(--neon-green); padding-bottom: 0.5rem;">
+                Super Market Analysis 🛒📊
+                <img src="pic.png" alt="">
+            </h2>
+            
+            <p style="line-height: 1.6; margin-bottom: 2rem;">
+                Supermarket analysis involves studying sales trends, customer behavior, and inventory management to optimize business operations and increase revenue. It uses data analytics, visualization, and machine learning to make data-driven decisions.
+            </p>
+            
+            <h3 style="color: var(--neon-blue); margin-bottom: 1rem;">
+                Key Aspects of Supermarket Analysis:
+            </h3>
+            
+            <div class="analysis-grid">
+                <!-- Card 1 -->
+                <div class="analysis-card">
+                    <div class="card-title">
+                        <i class="fas fa-chart-line"></i> Sales Performance
+                    </div>
+                    <p>Identify best-selling products, seasonal trends, and revenue growth patterns to optimize product placement and marketing strategies.</p>
+                    <div style="margin-top: 1rem;">
+                        <span class="tech-tag">Time Series Analysis</span>
+                        <span class="tech-tag">Revenue Forecasting</span>
+                    </div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="analysis-card">
+                    <div class="card-title">
+                        <i class="fas fa-users"></i> Customer Behavior
+                    </div>
+                    <p>Analyze purchase patterns, customer demographics, and loyalty program effectiveness to enhance customer experience.</p>
+                    <div style="margin-top: 1rem;">
+                        <span class="tech-tag">RFM Analysis</span>
+                        <span class="tech-tag">Cluster Analysis</span>
+                    </div>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="analysis-card">
+                    <div class="card-title">
+                        <i class="fas fa-boxes"></i> Inventory Management
+                    </div>
+                    <p>Optimize stock levels, reduce waste, and forecast demand to maintain ideal inventory turnover ratios.</p>
+                    <div style="margin-top: 1rem;">
+                        <span class="tech-tag">Demand Forecasting</span>
+                        <span class="tech-tag">ABC Analysis</span>
+                    </div>
+                </div>
+                
+                <!-- Card 4 -->
+                <div class="analysis-card">
+                    <div class="card-title">
+                        <i class="fas fa-tags"></i> Pricing Strategies
+                    </div>
+                    <p>Evaluate the impact of discounts, promotions, and competitive pricing on sales volume and profit margins.</p>
+                    <div style="margin-top: 1rem;">
+                        <span class="tech-tag">Price Elasticity</span>
+                        <span class="tech-tag">Promotion Analysis</span>
+                    </div>
+                </div>
+                
+                <!-- Card 5 -->
+                <div class="analysis-card">
+                    <div class="card-title">
+                        <i class="fas fa-shopping-basket"></i> Market Basket Analysis
+                    </div>
+                    <p>Discover product relationships to improve cross-selling strategies and optimize product placement.</p>
+                    <div style="margin-top: 1rem;">
+                        <span class="tech-tag">Apriori Algorithm</span>
+                        <span class="tech-tag">Association Rules</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="insights-section">
+                <h3 style="color: var(--neon-pink); margin-bottom: 1.5rem;">
+                    Technologies Used:
+                </h3>
+                
+                <div class="insight-item">
+                    <div class="insight-icon">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <div>
+                        <strong>Python & Pandas</strong> - For data cleaning, transformation, and advanced analysis
+                    </div>
+                </div>
+                
+                <div class="insight-item">
+                    <div class="insight-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div>
+                        <strong>SQL</strong> - For querying large datasets efficiently
+                    </div>
+                </div>
+                
+                <div class="insight-item">
+                    <div class="insight-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div>
+                        <strong>Power BI / Tableau</strong> - For creating interactive dashboards and visualizations
+                    </div>
+                </div>
+                
+                <div class="insight-item">
+                    <div class="insight-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div>
+                        <strong>Machine Learning</strong> - For predictive analytics and demand forecasting
+                    </div>
+                </div>
+            </div>
+            
+            <div class="insights-section">
+                <h3 style="color: var(--neon-green); margin-bottom: 1.5rem;">
+                    Example Insights from a Supermarket Analysis:
+                </h3>
+                
+                <div class="insight-item">
+                    <div class="insight-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div>
+                        <strong>Peak Sales Hours</strong> - Identify rush hours for better staffing and stock management
+                    </div>
+                </div>
+                
+                <div class="insight-item">
+                    <div class="insight-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div>
+                        <strong>Top-Selling Products</strong> - Understand what customers buy the most to optimize inventory
+                    </div>
+                </div>
+                
+                <div class="insight-item">
+                    <div class="insight-icon">
+                        <i class="fas fa-user-tag"></i>
+                    </div>
+                    <div>
+                        <strong>Customer Segmentation</strong> - Group customers based on spending habits for targeted marketing
+                    </div>
+                </div>
+                
+                <div class="insight-item">
+                    <div class="insight-icon">
+                        <i class="fas fa-random"></i>
+                    </div>
+                    <div>
+                        <strong>Product Recommendations</strong> - Suggest items frequently bought together (e.g., milk & cereal)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="command-line" style="margin-top: 3rem;">
+                <span class="prompt">></span>
+                <span class="command">analysis_session_ended</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Terminal typing effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const commands = [
+                "run analysis --type=supermarket --depth=full",
+                "loading datasets...",
+                "processing transaction records...",
+                "analyzing customer behavior patterns...",
+                "generating visualizations...",
+                "analysis complete. displaying results:"
+            ];
+            
+            const promptElement = document.querySelector('.command-line .command');
+            const cursorElement = document.querySelector('.blinking-cursor');
+            let cmdIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            
+            function typeCommand() {
+                const currentCmd = commands[cmdIndex];
+                
+                if (isDeleting) {
+                    // Backspace effect
+                    promptElement.textContent = currentCmd.substring(0, charIndex - 1);
+                    charIndex--;
+                    
+                    if (charIndex === 0) {
+                        isDeleting = false;
+                        cmdIndex = (cmdIndex + 1) % commands.length;
+                        setTimeout(typeCommand, 500);
+                    } else {
+                        setTimeout(typeCommand, 50);
+                    }
+                } else {
+                    // Typing effect
+                    promptElement.textContent = currentCmd.substring(0, charIndex + 1);
+                    charIndex++;
+                    
+                    if (charIndex === currentCmd.length) {
+                        isDeleting = true;
+                        setTimeout(typeCommand, 1500);
+                    } else {
+                        setTimeout(typeCommand, 50 + Math.random() * 50);
+                    }
+                }
+            }
+            
+            // Start the typing effect
+            setTimeout(typeCommand, 1000);
+            
+            // Add glow effect to cards on hover
+            const cards = document.querySelectorAll('.analysis-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = `0 0 15px ${getRandomNeonColor()}`;
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = '0 5px 15px rgba(0, 247, 255, 0.3)';
+                });
+            });
+            
+            function getRandomNeonColor() {
+                const colors = ['rgba(0, 255, 65, 0.5)', 'rgba(0, 247, 255, 0.5)', 'rgba(255, 0, 228, 0.5)'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+        });
+    </script>
+</body>
+</html>
